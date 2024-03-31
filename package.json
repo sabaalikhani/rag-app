@@ -1,12 +1,22 @@
 {
-  "name": "rag-app",
+  "name": "monorepo-template",
+  "private": true,
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "MIT",
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
+  "scripts": {
+    "start:backend": "pnpm turbo run start --filter=backend",
+    "start:frontend": "pnpm turbo run start --filter=frontend",
+    "build": "pnpm turbo run build",
+    "lint": "pnpm turbo run lint",
+    "format": "pnpm turbo run format",
+    "dev": "pnpm turbo run dev"
+  },
+  "devDependencies": {
+    "turbo": "latest"
+  }
 }
