@@ -67,10 +67,12 @@ export const outputParser = (output: BaseMessageChunk): PaperNote[] => {
 		throw new Error('No tool calls found');
 	}
 
-	const notes: PaperNote[] = toolCalls.map((call) => {
-		const { notes } = JSON.parse(call.function.arguments);
-		return notes;
-	});
+	const notes: PaperNote[] = toolCalls
+		.map((call) => {
+			const { notes } = JSON.parse(call.function.arguments);
+			return notes;
+		})
+		.flat();
 
 	return notes;
 };
