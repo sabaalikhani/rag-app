@@ -11,6 +11,7 @@ import {
 	PaperNote,
 	outputParser,
 } from 'prompts';
+import { SupabaseDatabase } from 'database';
 
 async function deletePages(pdf: Buffer, pagesToDelete: number[]) {
 	const doc = await PDFDocument.load(pdf);
@@ -53,7 +54,7 @@ async function convertPdfToDocuments(pdf: Buffer): Promise<Document[]> {
 
 	await unlink(pdfPath);
 
-	return documents;
+	return documents.filter((el) => !!el.pageContent);
 }
 
 async function generateNotes(documents: Document[]): Promise<PaperNote[]> {
@@ -96,9 +97,16 @@ async function main({
 
 	const notes = await generateNotes(documents);
 
-	console.log('Notes?', notes);
+	const database = await SupabaseDatabase.fromDocuments(documents);
 
-	console.log('Number of notes?', notes.length);
+	await database.addPaper({
+		url: paperUrl,
+		name,
+		paper: formatDocumentsAsString(documents),
+		notes,
+	});
+
+	console.log(name);
 }
 
 main({ paperUrl: 'https://arxiv.org/pdf/2401.00400.pdf', name: 'test' });
