@@ -1,6 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import { takeNotes } from 'index';
+import { takeNotes } from 'notes';
+import { qaOnPaper } from 'qa';
 
 function main() {
 	const app = express();
@@ -20,6 +21,14 @@ function main() {
 		const notes = await takeNotes({ paperUrl, name, pagesToDelete });
 
 		res.status(200).json({ notes });
+	});
+
+	app.post('/qa', async (req, res) => {
+		const { paperUrl, question } = req.body;
+
+		const qa = await qaOnPaper(question, paperUrl);
+
+		res.status(200).json({ qa });
 	});
 
 	app.listen(port, () => {

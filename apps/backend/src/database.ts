@@ -3,7 +3,7 @@ import { SupabaseClient, createClient } from '@supabase/supabase-js';
 import { SupabaseVectorStore } from 'langchain/vectorstores/supabase';
 import { OpenAIEmbeddings } from 'langchain/embeddings/openai';
 import { Database } from 'generated/db.js';
-import { PaperNote } from './prompts';
+import { PaperNote } from './notes/prompts';
 
 export const PAPERS_TABLE = 'papers';
 export const EMBEDDINGS_TABLE = 'embeddings';
