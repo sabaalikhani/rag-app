@@ -5,14 +5,14 @@
   "main": "index.js",
   "scripts": {
     "build": "pnpm gen:supabase:types && tsc --declaration --outDir dist/",
-    "start": "tsx --experimental-wasm-modules -r dotenv/config src/index.ts dotenv_config_path=.env.local",
+    "start": "tsx --experimental-wasm-modules -r dotenv/config src/server.ts dotenv_config_path=.env.local",
     "start:dist": "pnpm build && node -r dotenv/config dist/index.js",
     "lint": "eslint src",
     "lint:fix": "pnpm lint --fix",
     "precommit": "lint-staged",
     "format": "prettier --write \"**/*.ts\"",
     "format:check": "prettier --check \"**/*.ts\"",
-    "gen:supabase:types": "touch ./src/generated/db.ts && supabase gen types typescript --schema public > ./src/generated/db.ts --project-id <YOUR_PROJECT_ID>"
+    "gen:supabase:types": "touch ./src/generated/db.ts && supabase gen types typescript --schema public > ./src/generated/db.ts --project-id pcnghmvawpyltlfiedug"
   },
   "keywords": [],
   "author": "",
@@ -20,6 +20,7 @@
   "dependencies": {
     "@supabase/supabase-js": "^2.41.1",
     "axios": "^1.6.8",
+    "body-parser": "^1.20.2",
     "cors": "^2.8.5",
     "express": "^4.19.2",
     "langchain": "^0.1.30",

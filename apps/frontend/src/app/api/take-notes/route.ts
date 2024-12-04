@@ -1,0 +1,30 @@
+import type { NextApiRequest, NextApiResponse } from 'next';
+
+export type PaperNote = {
+	note: string;
+	pageNumbers: number[];
+};
+
+export async function POST(
+	req: Request,
+	res: NextApiResponse<Array<PaperNote> | undefined>
+) {
+	const API_URL = 'http://localhost:8001/take-notes';
+	const data = await fetch(API_URL, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: req.body,
+		duplex: 'half',
+	}).then((res) => {
+		if (res.ok) {
+			return res.json();
+		}
+		return null;
+	});
+	if (data) {
+		return res.status(200).json(data);
+	}
+	return res.status(400);
+}
